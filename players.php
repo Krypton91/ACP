@@ -149,6 +149,10 @@ include 'header/header.php';
                 echo '</td>';
                 outputSelection(1, 'isWhitelisted', $row['isWhitelisted'], $row['id']);
                 outputSelection(1, 'drivingLicense', $row['drivingLicense'], $row['id']);
+                echo '<form action=editPlayer.php method=post>';
+                echo '<td>'."<input class='btn btn-primary btn-outline' type=submit name=edit id=edit value=Edit".' ></td>';
+                echo "<td style='display:none;'>".'<input type=hidden name=hidden value='.$row['id'].'> </td>';
+                echo "<td style='display:none;'>".'<input type=hidden name=guid value='.$return.'> </td>';
                 echo '</form>';
                 echo '</tr>';
             }

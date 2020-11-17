@@ -39,7 +39,7 @@ function startTime() {
     var t = setTimeout(startTime, 500);
 }
 function checkTime(i) {
-    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10 ANTI BRUTEFORCE BY KRYPTON LUL! Red deine Webseiten sind sicherer als von Google xD
     return i;
 }
 </script>
@@ -49,7 +49,7 @@ function checkTime(i) {
 <div id="background"></div>
 	<div id = "header">
         <div class ="logo"><a href="#">Admin<span>Panel</span></a></div>
-		<div class ="logoE"><a href="#">By Jason_000</a></div>
+		<div class ="logoE"><a href="#">By Krypton91</a></div>
 	</div>
 <center><div id="txt"></div>
 <script>startTime();</script>

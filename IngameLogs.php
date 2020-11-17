@@ -59,7 +59,8 @@ switch ($_GET['search']) {
         break;
 }
 
-if (isset($_POST['search'])) {
+if (isset($_POST['search'])) 
+{
     $valuetosearch = $_POST['SearchValue'];
     $sqlget = "SELECT * FROM logs WHERE CONCAT (`playername`,`ip`,`id`) LIKE '%".$valuetosearch."%'";
     $search_result = filterTable($dbcon, $sqlget);
@@ -67,25 +68,13 @@ if (isset($_POST['search'])) {
         $sqlget = "SELECT * FROM logs WHERE CONCAT (`playername`,`ip`,`id`) LIKE '%".$valuetosearch."%'";
         $search_result = filterTable($dbcon, $sqlget);
     }
-} elseif (isset($_POST['orderTelefonnummer']) || $_GET['search'] == 'telefonnummer') {
-    $sqlget = 'SELECT * FROM logs ORDER BY telefonnummer DESC limit '.$page.',50';
-    $search_result = filterTable($dbcon, $sqlget);
-} elseif (isset($_POST['orderCash']) || $_GET['search'] == 'cash') {
-    $sqlget = 'SELECT * FROM logs ORDER BY money DESC limit '.$page.',50';
-    $search_result = filterTable($dbcon, $sqlget);
-} elseif (isset($_POST['orderisWhitelisted']) || $_GET['search'] == 'isWhitelisted') {
-    $sqlget = 'SELECT * FROM logs ORDER BY isWhitelisted DESC limit '.$page.',50';
-    $search_result = filterTable($dbcon, $sqlget);
-} elseif (isset($_POST['orderFührerschein']) || $_GET['search'] == 'führerschein') {
-    $sqlget = 'SELECT * FROM logs ORDER BY drivingLicense DESC limit '.$page.',50';
-    $search_result = filterTable($dbcon, $sqlget);
-} elseif (isset($_POST['orderAdmin']) || $_GET['search'] == 'admin') {
-    $sqlget = 'SELECT * FROM logs ORDER BY adminlevel DESC limit '.$page.',50';
-    $search_result = filterTable($dbcon, $sqlget);
-} else {
+} 
+else 
+{
     $sqlget = 'SELECT * FROM logs limit '.$page.',50';
     $search_result = filterTable($dbcon, $sqlget);
 }
+
 include 'header/header.php';
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

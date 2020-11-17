@@ -107,7 +107,7 @@ if ($username && $password) {
                 die();
             }
         } else {
-            echo 'Your user/password is incorrect!';
+            echo 'Falsche Anmeldedaten';
             setcookie('fail', '1');
             $_SESSION['failedLogin'] = $_SESSION['failedLogin'] + 1;
             if ($_SESSION['failedLogin'] >= 5) {
@@ -117,9 +117,9 @@ if ($username && $password) {
                 header('Location: index.php');
                 die();
             }
-        }//block
+        }//Anti Fucker Protection by Kr91 -> brutefore not avaible :D FUCK OFFF FUCKING HACKERS 
     } else {
-        echo 'That user does not exist!';
+        echo 'Keine Daten verfügbar!';
         setcookie('fail', '1');
         $_SESSION['failedLogin'] = $_SESSION['failedLogin'] + 1;
         if ($_SESSION['failedLogin'] >= 5) {
@@ -131,7 +131,7 @@ if ($username && $password) {
         }
     }
 } else {
-    echo 'please enter username/password!';
+    echo 'ohne Daten gehts nicht!';
     setcookie('fail', '1');
     header('Location: index.php');
     die();

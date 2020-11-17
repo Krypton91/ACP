@@ -10,7 +10,7 @@ if (!isset($_SESSION['logged'])) {
 $staffPerms = $_SESSION['perms'];
 $user = $_SESSION['user'];
 
-if ($staffPerms['logs'] != '1') {
+if ($staffPerms['ACP_LOGS'] != '1') {
     header('Location: lvlError.php');
     die();
 }

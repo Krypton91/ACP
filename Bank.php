@@ -67,21 +67,6 @@ if (isset($_POST['search'])) {
         $sqlget = "SELECT * FROM bank_konten WHERE CONCAT (`beschreibung`,`ownerId`,`id`) LIKE '%".$valuetosearch."%'";
         $search_result = filterTable($dbcon, $sqlget);
     }
-} elseif (isset($_POST['orderTelefonnummer']) || $_GET['search'] == 'telefonnummer') {
-    $sqlget = 'SELECT * FROM bank_konten ORDER BY telefonnummer DESC limit '.$page.',50';
-    $search_result = filterTable($dbcon, $sqlget);
-} elseif (isset($_POST['orderCash']) || $_GET['search'] == 'cash') {
-    $sqlget = 'SELECT * FROM bank_konten ORDER BY money DESC limit '.$page.',50';
-    $search_result = filterTable($dbcon, $sqlget);
-} elseif (isset($_POST['orderisWhitelisted']) || $_GET['search'] == 'isWhitelisted') {
-    $sqlget = 'SELECT * FROM bank_konten ORDER BY isWhitelisted DESC limit '.$page.',50';
-    $search_result = filterTable($dbcon, $sqlget);
-} elseif (isset($_POST['orderFührerschein']) || $_GET['search'] == 'führerschein') {
-    $sqlget = 'SELECT * FROM bank_konten ORDER BY drivingLicense DESC limit '.$page.',50';
-    $search_result = filterTable($dbcon, $sqlget);
-} elseif (isset($_POST['orderAdmin']) || $_GET['search'] == 'admin') {
-    $sqlget = 'SELECT * FROM bank_konten ORDER BY adminlevel DESC limit '.$page.',50';
-    $search_result = filterTable($dbcon, $sqlget);
 } else {
     $sqlget = 'SELECT * FROM bank_konten limit '.$page.',50';
     $search_result = filterTable($dbcon, $sqlget);

@@ -41,7 +41,10 @@ function filterTable($dbcon, $sqlget)
 
     return $sqldata;
 }
-
+function GetPermissionForAction($PermissionGroup, $ActionPermNeed)
+{
+    
+}
 function outputSelection($max, $column, $value, $uid)
 {
     ++$max;
@@ -57,12 +60,20 @@ function outputSelection($max, $column, $value, $uid)
     }
     echo '</select></td>';
 }
-
+//Returns playername
+function GetPlayerName($player)
+{
+    if($player->ingameName != "")
+        return $player->ingameName;
+    //If Request is for Bankaccount!
+    if($player->beschreibung != "")
+        return $player->beschreibung;
+}
 function logs($perms, $column, $pid, $user, $dbcon, $player, $val)
 {
     if ($perms == '1') {
         if ($val != $player->$column) {
-            $message = 'Admin '.$user.' has changed '.utf8_encode($player->name).'('.$pid.')'.' '.$column.' from '.$player->$column.' to '.$val;
+            $message = 'Admin '.$user.' has changed '.utf8_encode(GetPlayerName($player)).''.$id.''.' '.$column.' from '.$player->$column.' to '.$val;
             logIt($user, $message, $dbcon);
 
             $return = $val;
@@ -71,7 +82,7 @@ function logs($perms, $column, $pid, $user, $dbcon, $player, $val)
         }
     } else {
         if ($val != $player->$column) {
-            $message = 'Admin '.$user.' tried to change '.utf8_encode($player->name).'('.$pid.')'.' '.$column.' from '.$player->$column.' to '.$val;
+            $message = 'Admin '.$user.' tried to change '.utf8_encode(GetPlayerName($player)).'('.$pid.')'.' '.$column.' from '.$player->$column.' to '.$val;
             logIt($user, $message, $dbcon);
 
             $return = $player->$column;

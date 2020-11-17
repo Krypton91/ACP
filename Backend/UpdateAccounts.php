@@ -32,7 +32,7 @@ if ($player->playerid != '' || $player->pid != '') {
     }
 }
 
-//Hash das passwort.
+//Nimmt das Klare Passwort auf und returnt ein SHA256 hashed pw!
 function HashPassword($clearPW)
 {
     $newPassword = hash('sha256', $clearPW);
@@ -41,39 +41,22 @@ function HashPassword($clearPW)
 }
 switch ($_POST['column']) {
     case 'password':
-        $password = logs($staffPerms['money'], 'password', $pid, $user, $dbcon, $player, $_POST['editval']);
+        $password = logs($staffPerms['pwchange'], 'password', $pid, $user, $dbcon, $player, $_POST['editval']);
         $test = HashPassword($password);
         $UpdateQ = "UPDATE accounts SET $_POST[column]='$test' WHERE id='$_POST[uid]'";
     break;
     case 'hwid':
-        $hwid = logs($staffPerms['money'], 'hwid', $pid, $user, $dbcon, $player, $_POST['editval']);
+        $hwid = logs($staffPerms['hwid'], 'hwid', $pid, $user, $dbcon, $player, $_POST['editval']);
         $UpdateQ = "UPDATE accounts SET $_POST[column]='$hwid' WHERE id='$_POST[uid]'";
     break;
     case 'isWhitelisted':
-        $IsWhiteListed = logs($staffPerms['money'], 'isWhitelisted', $pid, $user, $dbcon, $player, $_POST['editval']);
+        $IsWhiteListed = logs($staffPerms['whitelist'], 'isWhitelisted', $pid, $user, $dbcon, $player, $_POST['editval']);
         $UpdateQ = "UPDATE accounts SET $_POST[column]='$IsWhiteListed' WHERE id='$_POST[uid]'";
     break;
     case 'isBanned':
-        $isBanned = logs($staffPerms['money'], 'isBanned', $pid, $user, $dbcon, $player, $_POST['editval']);
+        $isBanned = logs($staffPerms['ban'], 'isBanned', $pid, $user, $dbcon, $player, $_POST['editval']);
         $UpdateQ = "UPDATE accounts SET $_POST[column]='$isBanned' WHERE id='$_POST[uid]'";
     break;
-    case 'adminlevel':
-        $adminlevel = logs($staffPerms['IG-Admin'], 'adminlevel', $pid, $user, $dbcon, $player, $_POST['editval']);
-        $UpdateQ = "UPDATE players SET $_POST[column]='$adminlevel' WHERE uid='$_POST[uid]'";
-    break;
-    case 'donatorlvl':
-        $donatorlvl = logs($staffPerms['editPlayer'], $_POST['column'], $pid, $user, $dbcon, $player, $_POST['editval']);
-        $UpdateQ = "UPDATE players SET $_POST[column]='$donatorlvl' WHERE uid='$_POST[uid]'";
-    break;
-    case 'donorlevel':
-        $donorlevel = logs($staffPerms['editPlayer'], $_POST['column'], $pid, $user, $dbcon, $player, $_POST['editval']);
-        $UpdateQ = "UPDATE players SET $_POST[column]='$donorlevel' WHERE uid='$_POST[uid]'";
-    break;
-    case 'blacklist':
-        $blacklist = logs($staffPerms['editPlayer'], $_POST['column'], $pid, $user, $dbcon, $player, $_POST['editval']);
-        $UpdateQ = "UPDATE players SET $_POST[column]='$blacklist' WHERE uid='$_POST[uid]'";
-    break;
-
     default:
         $message = 'ERROR';
         logIt($user, $message, $dbcon);

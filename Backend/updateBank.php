@@ -34,14 +34,13 @@ if ($player->playerid != '' || $player->pid != '') {
 
 switch ($_POST['column']) {
     case 'amount':
-        $amount = logs($staffPerms['money'], 'Bank', $pid, $user, $dbcon, $player, $_POST['editval']);
+        $amount = logs($staffPerms['bank'], 'Bank', $pid, $user, $dbcon, $player, $_POST['editval']);
         $UpdateQ = "UPDATE bank_konten SET $_POST[column]='$amount' WHERE ownerId='$_POST[uid]'";
-        logIt("SYSTEM: ", $amount, $dbcon);
     break;
     default:
         $message = 'ERROR';
         logIt($user, $message, $dbcon);
     break;
 }
-
 mysqli_query($dbcon, $UpdateQ);
+

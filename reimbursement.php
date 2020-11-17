@@ -13,7 +13,7 @@ $user = $_SESSION['user'];
 include 'verifyPanel.php';
 masterconnect();
 
-if ($staffPerms['money'] != '1') {
+if ($staffPerms['ACP_LOGS'] != '1') {
     echo "<script src='scripts/na.js'></script>";
     header('Location: lvlError.php');
     die();

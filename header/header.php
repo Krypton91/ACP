@@ -60,7 +60,7 @@
                 <?php
                 $staffPerms = $_SESSION['perms'];
                 switch ($staffPerms) {
-                    case $staffPerms['logs'] == '1':
+                    case $staffPerms['ACP_LOGS'] == '1':
                         echo "<li><a href=\"logs.php?page=1\">Logs</a></li>";
                     case $staffPerms['money'] == '1':
                         echo "<li><a href=\"reimbursement.php\">Support</a></li>";

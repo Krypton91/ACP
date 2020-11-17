@@ -38,34 +38,17 @@ switch ($_POST['column']) {
         $UpdateQ = "UPDATE characters SET $_POST[column]='$cash' WHERE id='$_POST[uid]'";
     break;
     case 'telefonnummer':
-        $bankacc = logs($staffPerms['money'], 'telefonnummer', $pid, $user, $dbcon, $player, $_POST['editval']);
+        $bankacc = logs($staffPerms['telnumber'], 'telefonnummer', $pid, $user, $dbcon, $player, $_POST['editval']);
         $UpdateQ = "UPDATE characters SET $_POST[column]='$bankacc' WHERE id='$_POST[uid]'";
     break;
     case 'isWhitelisted':
-        $coplevel = logs($staffPerms['money'], 'isWhitelisted', $pid, $user, $dbcon, $player, $_POST['editval']);
+        $coplevel = logs($staffPerms['whitelist'], 'isWhitelisted', $pid, $user, $dbcon, $player, $_POST['editval']);
         $UpdateQ = "UPDATE characters SET $_POST[column]='$coplevel' WHERE id='$_POST[uid]'";
     break;
     case 'drivingLicense':
-        $mediclevel = logs($staffPerms['money'], 'drivingLicense', $pid, $user, $dbcon, $player, $_POST['editval']);
+        $mediclevel = logs($staffPerms['driverlicense'], 'drivingLicense', $pid, $user, $dbcon, $player, $_POST['editval']);
         $UpdateQ = "UPDATE characters SET $_POST[column]='$mediclevel' WHERE id='$_POST[uid]'";
     break;
-    case 'adminlevel':
-        $adminlevel = logs($staffPerms['IG-Admin'], 'adminlevel', $pid, $user, $dbcon, $player, $_POST['editval']);
-        $UpdateQ = "UPDATE players SET $_POST[column]='$adminlevel' WHERE uid='$_POST[uid]'";
-    break;
-    case 'donatorlvl':
-        $donatorlvl = logs($staffPerms['editPlayer'], $_POST['column'], $pid, $user, $dbcon, $player, $_POST['editval']);
-        $UpdateQ = "UPDATE players SET $_POST[column]='$donatorlvl' WHERE uid='$_POST[uid]'";
-    break;
-    case 'donorlevel':
-        $donorlevel = logs($staffPerms['editPlayer'], $_POST['column'], $pid, $user, $dbcon, $player, $_POST['editval']);
-        $UpdateQ = "UPDATE players SET $_POST[column]='$donorlevel' WHERE uid='$_POST[uid]'";
-    break;
-    case 'blacklist':
-        $blacklist = logs($staffPerms['editPlayer'], $_POST['column'], $pid, $user, $dbcon, $player, $_POST['editval']);
-        $UpdateQ = "UPDATE players SET $_POST[column]='$blacklist' WHERE uid='$_POST[uid]'";
-    break;
-
     default:
         $message = 'ERROR';
         logIt($user, $message, $dbcon);
