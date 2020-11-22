@@ -12,9 +12,26 @@ include 'verifyPanel.php';
 include 'header/header.php';
 ?>
 
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <h1 style = "margin-top: 70px">Profile Menu</h1>
-        <p class="page-header">Allows you to edit your account.</p>
+    <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+        <h1 style = "margin-top: 70px">Einstellungen</h1>
 
         <?php
 
@@ -73,7 +90,6 @@ include 'header/header.php';
 
         <div class='panel panel-info'>
             <div class='panel-heading'>
-            <h3 class='panel-title'>User Info</h3>
             </div>
             <div class='panel-body'>
                 <center><h4><?php echo $user; ?></h4>
@@ -82,14 +98,14 @@ include 'header/header.php';
                 <br>
 
                 <form action = "profile.php" method="post">
-                    <h4>Current Password</h4>
-                    <input type="password" name= "curPass" class="form-control" value="" placeholder="Current Password...">
-                    <h4>Password</h4>
-                    <input type="password" name= "pass" class="form-control" value="" placeholder="Password...">
-                    <h4>Repeat Password</h4>
-                    <input type="password" name= "pass1" class="form-control" value="" placeholder="Repeat password...">
+                    <h4>Aktuelles Passwort</h4>
+                    <input type="password" name= "curPass" class="form-control" value="" placeholder="Aktuelles Passwort">
+                    <h4>Neues Passwort</h4>
+                    <input type="password" name= "pass" class="form-control" value="" placeholder="Neues Passwort">
+                    <h4>Passwort wiederholen</h4>
+                    <input type="password" name= "pass1" class="form-control" value="" placeholder="Passwort wiederholen">
                     <br>
-                    <button type="submit" name="updateButton" class="btn btn-primary btn-lg btn-block btn-outline">Update</button>
+                    <button type="submit" name="updateButton" class="btn btn-primary btn-lg btn-block btn-outline">Speichern</button>
                 </form>
             </div>
         </div>

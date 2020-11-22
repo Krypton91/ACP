@@ -45,23 +45,11 @@ include 'header/header.php';
 ?>
 
 
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 style = "margin-top: 70px">Profil von: <?php echo $username;?></h1>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
           <div id="alert-area"></div>
 		  <form action='editPlayer.php' method='post'>
-		  <div class="btn-group" role="group" aria-label="...">
-		  <input class = 'btn btn-primary btn-outline' type='submit' name='remove' value='Edit bank and cash'>
-	   	  </div>
-          <div class="btn-group" role="group" aria-label="...">
-          <input class = 'btn btn-primary btn-outline' type='submit' name='give' value='Vehicles'>
-          </div>
-          <input type=hidden name=hidden value= <?php echo $uidPlayer; ?> >
-          <input type=hidden name=guid value= <?php echo $guidPlayer; ?> >
-          <div class="btn-group" role="group" aria-label="...">
-          <button type="button" class="btn btn-primary btn-outline" data-toggle="modal" data-target="#myModal">Edit Gear</button>
-          </form>
-    </div>
-          <br>
 
 
 
@@ -110,81 +98,232 @@ include 'header/header.php';
 </div>
 </div>
 
-<div class='panel panel-info'>
-  <div class='panel-heading'>
-    <h3 class='panel-title'>Player Info</h3>
-  </div>
-  <div class='panel-body'>
-<?php
-//FETCH INFO RETURN FROM DB! Selenski da musst du es ändern! :-)
-echo "<div class='lic'>";
-echo "<div id ='editPlayer'><center><h1>".$username.'</h1></center>';
-//Online -> Offline Return wenn ein bild dann hier! :)
-if($player->isOnline == 'Y')
-{
-    echo '<center style="color:darkgreen;text-align:center;">Online</center>';
-}
-else
-{
-    //echo '<style="color:blue"> <center><h4>Status: Offline</h3></center>>';
-    echo '<center style="color:red;text-align:center;">Offline</center>';
-}
-echo '<center><h4>SocialClub: '.$account->socialClub.'</h3></center>';
-echo '<center><h4>Player since: '.$account->createdAt.'</h3></center>';
-echo '<center><h4>SocialClub: '.$account->socialClub.'</h3></center>';
-echo '<center><h4>BANK: '.$bankAccount->amount.'$</h3></center>';
-echo '<center><h4>CASH: '.$player->money.'$</h3></center>';
-echo '<center><h4>HEALTH: '.$player->health.'</h3></center>';
+ <!-- Main content -->
+ <section class="content">
+    <div class="container-fluid">
+    <!-- Main row -->
+    <div class="row">
+            <!-- Left col -->
+            <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>Bank Konto</h3>
 
-echo '</div>';
-echo '</div>';
-//PlayerNotes wenn Icons für edit usw hier ändern!
-echo "<div class='panel panel-info'>
-  <div class='panel-heading'>
-    <h3 class='panel-title'>Player Notes</h3>
-    <input class='btn btn-primary btn-outline' type=submit name=NEW id=NEW value=NEW>
-  </div>
-  <div class='panel-body'>";
-  ?>
-            <div class="table-responsive">
-            <table class="table table-striped" style = "margin-top: -10px">
-              <thead>
-                <tr>
-					<th>Added by</th>
-					<th>Note</th>
-					<th>Date added</th>
-                </tr>
-              </thead>
-              <tbody>
+                <p><?php echo "$bankAccount->amount $" ?></p>
+              </div>
+              <div class="icon">
+              <i class="fas fa-university"></i>
+              </div>
+              <a href="#" class="small-box-footer">Edit <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>Bargeld</h3>
+                <p><?php echo "$player->money $" ?></p>
+              </div>
+              <div class="icon">
+              <i class="fas fa-money-bill"></i>
+              </div>
+              <a href="#" class="small-box-footer">Edit <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+          
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>Registriert  seit</h3>
+                <p><?php echo "$account->createdAt" ?></p>
+              </div>
+              <div class="icon">
+              <i class="fas fa-clock"></i>
+              </div>
+              <a href="#" class="small-box-footer">Information</a>
+          </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>Whitelisted:</h3>
+                <p><?php
+                if($account->isWhitelisted == 1)
+                      echo "Yes!";
+                else
+                    echo "No!";
+                  ?>
+                 </p>
+              </div>
+              <div class="icon">
+              <i class="fas fa-clock"></i>
+              </div>
+              <a href="#" class="small-box-footer">Whitelist</a>
+          </div>
+          </div>
+          </div>
+        <div class="row">
+          <section class="col-lg-3 col-6">
+              <!-- Custom tabs (Charts with tabs)-->
+              <div class="card">
+                <div class="card-header">
+                <div class="btn-group" role="group" aria-label="...">
+                  <h3 class="card-title">
+                  <i class="fas fa-star"></i>
+                    INFO
+                  </h3>
+                 
+                  <div class="card-tools">
+                    <ul class="nav nav-pills ml-auto">
+                    <div class="card-body">
+                      <?php
+                      //FETCH INFO RETURN FROM DB! Selenski da musst du es ändern! :-)
+                      //Online -> Offline Return wenn ein bild dann hier! :)
+                      echo '</br>';
+                      if($player->isOnline == 'Y')
+                      {
+                          echo '<center>';
+                          echo '<small class="badge badge-success"></i>Online</small>';
+                      }
+                      else
+                      {
+                          //echo '<style="color:blue"> <center><h4>Status: Offline</h3></center>>';
+                          echo '<center>';
+                          echo '<small class="badge badge-danger"></i>Offline</small>';
+                      }
+                      echo '<center><b>Player since: </b>'.$account->createdAt.'</center>';
+                      echo '</br>';
+                      echo '</br>';
+                      echo '<center><b>SocialClub: </b>'.$account->socialClub.'</center>';
+                      echo '<center><b>First Name: </b>'.$player->ingameName.'</center>';
+                      //Essen Trinken Leben
+                      echo '</br>';
+                      echo '<center>Essen: '.$player->food.'</center>';
+                      echo '<center>Trinken: '.$player->drink.'</center>';
+                      echo '<center>Leben: '.$player->health.'</center>';
 
-<?php
+                      echo '</div>';
+                      //PlayerNotes wenn Icons für edit usw hier ändern!
+                      
+                  ?>
+              </ul>
+            </div><!-- /.card-header -->
+          </section>
+          
 
-$sqlget = "SELECT * FROM reimbursement_log WHERE playerid=$player->accountId;";
-$search_result = mysqli_query($dbcon, $sqlget) or die('Connection could not be established');
+          <!-- right col (We are only adding the ID to make the widgets sortable)-->
+          <section class="col-lg-5 connectedSortable">
 
-while ($row = mysqli_fetch_array($search_result, MYSQLI_ASSOC)) {
-    if ($row['warning'] == 2) {
-        echo '<tr class = "warning">';
-    } elseif ($row['warning'] == 3) {
-        echo '<tr class = "danger">';
-    } else {
-        echo '<tr>';
-    }
-    //UFFFF 
-    echo '<td>'.$row['staff_name'].' </td>';
-    echo '<td>'.$row['reason'].' </td>';
-    echo '<td>'.$row['timestamp'].' </td>';
-    echo '<td>'."<input class='btn btn-primary btn-outline' type=submit name=Delete id=Delete value=Delete".' ></td>';
-    echo '<td>'."<input class='btn btn-primary btn-outline' type=submit name=Edit id=edit value=Edit".' ></td>';
-    echo '</tr>';
-}
-echo '</table></div>';
-echo '</div>';
-echo '</div>';
+            <!-- Custom tabs (Charts with tabs)-->
+              <div class="card">
+                <div class="card-header">
+                <div class="btn-group" role="group" aria-label="...">
+                  <h3 class="card-title">
+                  <i class="fas fa-star"></i>
+                    Support
+                  </h3>
+                  </div>
+                  </br>
+                  </br>
+                  <!-- Button START -->
+                  <div class="btn-group" role="group" aria-label="...">
+		              <input class = 'btn btn-primary btn-outline' type='submit' name='remove' value='Edit bank and cash'>
+                   <!-- Button END -->
+	   	            </div>
+                   <!-- Button START -->
+                  <div class="btn-group" role="group" aria-label="...">
+		              <input class = 'btn btn-primary btn-outline' type='submit' name='remove' value='Vehicles'>
+                   <!-- Button END -->
+	   	            </div>
+                   <!-- Button START -->
+                  <div class="btn-group" role="group" aria-label="...">
+		              <input class = 'btn btn-primary btn-outline' type='submit' name='remove' value='Inventory'>
+                   <!-- Button END -->
+	   	            </div>
+                   <!-- Button START -->
+                  <div class="btn-group" role="group" aria-label="...">
+		              <input class = 'btn btn-primary btn-outline' type='submit' name='remove' value='Ban'>
+                   <!-- Button END -->
+	   	            </div>
+                  <div class="card-tools">
+                    <ul class="nav nav-pills ml-auto">
+                    <div class="card-body">
+                    <?php
+                      //PlayerNotes wenn Icons für edit usw hier ändern!
+                      
+                  ?>
+              </ul>
+            </div><!-- /.card-header -->
+            <!-- /.card -->
+            </div>
+          </div>
+          </div>
+          </div>
+          </div>
 
-?>
 
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Support-Info</h3>
+                <div class="card-tools">
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                    </div>
+                  </div>
+                </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>Bearbeitet von:</th>
+                      <th>Vergehen:</th>
+                      <th>Datum</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                              <?php
 
+                              $sqlget = "SELECT * FROM reimbursement_log WHERE playerid=$player->accountId;";
+                              $search_result = mysqli_query($dbcon, $sqlget) or die('Connection could not be established');
+
+                              while ($row = mysqli_fetch_array($search_result, MYSQLI_ASSOC)) {
+                                  //UFFFF 
+                                  echo '<tr>';
+                                  echo '<td>'.$row['staff_name'].' </td>';
+                                  echo '<td>'.$row['reason'].' </td>';
+                                  echo '<td>'.$row['timestamp'].' </td>';
+                                  echo '</tr>';
+                              }
+                              ?>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        </div><!-- /.card-body -->
+      </div>
+      </div>
+    <!-- /.content-wrapper -->
+    </body>
+<footer class="main-footer">
+    <strong>Copyright &copy; 2019-2020 <a href="https://la-la-land.eu/">La-La-Land</a>.</strong>
+    Developed by Krypton91 all rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 1.0
+    </div>
+  </footer>
 <script>
 
 function post (id)
@@ -240,9 +379,44 @@ function dbSave(value, uid, column, original){
         </div>
       </div>
     </div>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="dist/js/bootstrap.min.js"></script>
+
+
+    <!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- ChartJS -->
+<script src="plugins/chart.js/Chart.min.js"></script>
+<!-- Sparkline -->
+<script src="plugins/sparklines/sparkline.js"></script>
+<!-- JQVMap -->
+<script src="plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="plugins/jquery-knob/jquery.knob.min.js"></script>
+<!-- daterangepicker -->
+<script src="plugins/moment/moment.min.js"></script>
+<script src="plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Summernote -->
+<script src="plugins/summernote/summernote-bs4.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="dist/js/pages/dashboard.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
   </body>
 </html>
