@@ -75,36 +75,37 @@
           </li>
           <?php
                 $staffPerms = $_SESSION['perms'];
-                switch ($staffPerms) {
-                    case $staffPerms['ACP_LOGS'] == '1':
-                      ?>
-                      <li class="nav-item">
-                        <a href="logs.php" class="nav-link">
-                        <i class="fab fa-pied-piper-square"></i>
-                        <?php
-                          echo '<p>LOGS</p>';
-                        ?>
-                        </a>
-                        </li>
-                      <?php
-                    case $staffPerms['money'] == '1':
-                      ?>
-                      <li class="nav-item">
-                        <a href="home.php" class="nav-link">
-                        <i class="fas fa-money-bill-alt"></i>
-                        <?php
-                          echo '<p>Money</p>';
-                        ?>
-                        </a>
-                        </li>
-                      <?php
-                    case $staffPerms['SocialClub'] == '1':
+                switch ($staffPerms) 
+                {
+                    case $staffPerms['whitelist'] == '1':
                       ?>
                       <li class="nav-item">
                         <a href="SocialClub.php" class="nav-link">
                         <i class="fas fa-user-plus"></i>
                         <?php
                           echo '<p>Social Club</p>';
+                        ?>
+                        </a>
+                        </li>
+                      <?php
+                        case $staffPerms['logs'] == '1':
+                      ?>
+                      <li class="nav-item">
+                        <a href="IngameLogs.php" class="nav-link">
+                        <i class="fas fa-book-open"></i>
+                        <?php
+                          echo '<p>Logs</p>';
+                        ?>
+                        </a>
+                        </li>
+                        <?php
+                    case $staffPerms['superUser'] == '1':
+                      ?>
+                      <li class="nav-item">
+                        <a href="logs.php" class="nav-link">
+                        <i class="fas fa-book-open"></i>
+                        <?php
+                          echo '<p>ACP-Logs</p>';
                         ?>
                         </a>
                         </li>

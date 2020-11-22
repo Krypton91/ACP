@@ -281,11 +281,6 @@ include 'header/header.php';
                   </div>
                   </br>
                   </br>
-                  <!-- Button START -->
-                  <div class="btn-group" role="group" aria-label="...">
-		              <input class = 'btn btn-primary btn-outline' type='submit' name='remove' value='Edit bank and cash'>
-                   <!-- Button END -->
-	   	            </div>
                    <!-- Button START -->
                   <div class="btn-group" role="group" aria-label="...">
 		              <input class = 'btn btn-primary btn-outline' type='submit' name='remove' value='Vehicles'>
@@ -324,7 +319,7 @@ include 'header/header.php';
                 <h3 class="card-title">Support-Info</h3>
                 <div class="card-tools">
                     <div class="input-group-append">
-                      <button type="button" class="btn btn-default" data-toggle="AddTicketModal" data-target="#AddTicketModal"><i class="fas fa-plus"></i></button>
+                      <button type="button" class="btn btn-default" data-toggle="myModal" data-target="#myModal"><i class="fas fa-plus"></i></button>
                      
                     </div>
                   </div>
