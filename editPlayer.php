@@ -160,7 +160,7 @@ include 'header/header.php';
 <div class="modal-dialog modal-lg">
   <div class="modal-content">
     <div class="modal-header">
-      <h4 class="modal-title" id="myModalLabel">Konto</h4>
+      <h4 class="modal-title" id="myModalLabel">Bank Account von: <?php echo $player->ingameName ?></h4>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -176,17 +176,27 @@ include 'header/header.php';
           <div class="card card-outline card-info">
             <div class="card-header">
               <h3 class="card-title">
-                Begründung:
+                Konto:
               </h3>
               <!-- /. tools -->
             </div>
             <!-- /.card-header -->
             <div class="card-body pad">
               <div class="mb-3">
-              <form method="post"> 
-              <input id="probleminput" class="form-control" onBlur="dbSave(this.value, '<?php echo $player->id; ?>', 'amount', '<?php echo $bankAccount->amount; ?>')"; type=text value= "<?php echo $bankAccount->amount; ?>" >
-              <button type="submit" class="btn btn-block btn-primary" onclick="UpdateBank(probleminput.Value, $player->id, $bankAccount->amount)">Ändern</button>
-              </form> 
+              <form method="post" action="editPlayer.php">
+              <input name = "CashToUpdateVal" id="CashToUpdateVal" class="form-control" type=text value= "<?php echo $bankAccount->amount; ?>" >
+              <button type='submit' class="btn btn-block btn-primary" onclick="<?php 
+              $NewBankValue = $_POST['CashToUpdateVal'];
+              $UpdateQ = "UPDATE bank_konten SET amount='$NewBankValue' WHERE ownerId='$player->id'";
+              mysqli_query($dbcon, $UpdateQ);
+
+              logIt("KRYPTONSBOT", "DEBUG QUERY:", $dbcon);
+              logIt("KRYPTONSBOT", $NewBankValue, $dbcon);
+              logIt("KRYPTONSBOT", $player->id, $dbcon);
+              logIt("KRYPTONSBOT", "DEBUG END:", $dbcon);
+              
+              ?>">Ändern</button>
+              </form>
               </div>
             </div>
           </div>
@@ -373,7 +383,6 @@ include 'header/header.php';
                 <div class="card-tools">
                     <div class="input-group-append">
                       <button type="button" class="btn btn-default" data-toggle="modal" data-target="#AddNoteModal"><i class="fas fa-plus"></i></button>
-                     
                     </div>
                   </div>
                 </div>
@@ -466,17 +475,16 @@ function newAlert (type, message) {
     $(".alert").delay(2000).fadeOut("slow", function () { $(this).remove(); });
 }
 
-function UpdateBank(value, uid, column, original){
+function UpdateBank(){
 
-        if (value != original) {
             newAlert('alert-success', 'Value Updated!');
-
-            $.post('Backend/updateBank.php',{column:column, editval:value, uid:uid},
+            var value = document.getElementById('CashToUpdateVal').value;
+            logIt("SYSTEM", "dbSafe triggert with value: " + value, $dbcon);
+            $.post('Backend/updateBank.php',{column:'amount', editval:value, uid:<?PHP $player->id?>},
             function(){
-                //alert("Sent values.");
+              location.reload();
             });
         };
-
 }
 </script>
               </tbody>
