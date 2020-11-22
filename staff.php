@@ -124,7 +124,7 @@ if (isset($_POST['update'])) {
 while ($row = mysqli_fetch_array($sqldata, MYSQLI_ASSOC)) {
     echo '<form action=staff.php method=post>';
     echo '<tr>';
-    echo '<td>'."<input class='form-control' type=text name=username value=".$row['username'].' </td>';
+    echo '<td>'.utf8_encode($row['username']).' </td>';
     echo '<td>'."<input class='form-control' type=text name=password placeholder='New password' </td>";
     echo '<td>'."<input class='btn btn-primary btn-outline' type=submit name=delete value=Delete".' </td>';
     echo '<td>'."<input class='btn btn-primary btn-outline' type=submit name=update value=Update".' </td>';

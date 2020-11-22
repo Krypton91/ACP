@@ -43,55 +43,6 @@ include 'header/header.php';
   <br>
   <h4>Database Name</h4>
   <input type="text" name= "name" class="form-control" value="<?php echo $DBName; ?>">
-
-  <h4>RCON Host</h4>
-  <input type="text" name= "RHost" class="form-control" value="<?php echo $RconHost; ?>">
-
-  <br>
-  <h4>RCON Pass</h4>
-  <input type="password" name= "RPass" class="form-control" value="<?php echo $RconPass; ?>">
-
-  <br>
-  <h4>RCON Port</h4>
-  <input type="text" name= "RPort" class="form-control" value="<?php echo $RconPort; ?>">
-
-  <br>
-  <h4>Max Cop Level</h4>
-  <input type="text" name= "maxCop" class="form-control" value="<?php echo $maxCop; ?>">
-
-  <br>
-  <h4>Max Medic Level</h4>
-  <input type="text" name= "maxMedic" class="form-control" value="<?php echo $maxMedic; ?>">
-
-  <br>
-  <h4>Max Admin Level</h4>
-  <input type="text" name= "maxAdmin" class="form-control" value="<?php echo $maxAdmin; ?>">
-
-  <br>
-  <h4>Max Donator Level</h4>
-  <input type="text" name= "maxDonator" class="form-control" value="<?php echo $maxDonator; ?>">
-
-  <br>
-  <h4>API Username</h4>
-  <input type="text" name= "apiUser" class="form-control" value="<?php echo $apiUser; ?>">
-
-  <br>
-  <h4>API Password</h4>
-  <input type="text" name= "apiPass" class="form-control" value="<?php echo $apiPass; ?>">
-
-  <br>
-  <h4>API Enabled</h4>
-  <select class='form-control'name = 'apiEnable'>
-     <?php if ($apiEnable == 1) {
-    echo '<option>0</option>';
-    echo '<option selected="selected">1</option>';
-} else {
-    echo '<option selected="selected">0</option>';
-    echo '<option>1</option>';
-}
-
-     ?>
-
   </select>
 
 

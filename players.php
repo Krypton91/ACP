@@ -55,7 +55,7 @@ switch ($_GET['search']) {
         $search = 'admin';
         break;
     default:
-        $search = 'Nope';
+        $search = 'search';
         break;
 }
 

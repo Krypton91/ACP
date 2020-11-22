@@ -9,6 +9,11 @@ if (!isset($_SESSION['logged'])) {
 $staffPerms = $_SESSION['perms'];
 $user = $_SESSION['user'];
 
+if ($staffPerms['logs'] != '1') {
+    header('Location: lvlError.php');
+    die();
+}
+
 include 'verifyPanel.php';
 masterconnect();
 

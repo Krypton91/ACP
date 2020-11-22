@@ -10,7 +10,7 @@ if (!isset($_SESSION['logged'])) {
 $staffPerms = $_SESSION['perms'];
 $user = $_SESSION['user'];
 
-if ($staffPerms['ACP_LOGS'] != '1') {
+if ($staffPerms['ACPLOGS'] != '1') {
     header('Location: lvlError.php');
     die();
 }
@@ -105,7 +105,7 @@ if ($addPage > $amount) {
           <div class="table-responsive">
             <table class="table table-striped" style = "margin-top: -10px">
               <thead>
-                <tr>
+            <tr>
 					<th>Date/Time</th>
 					<th>Admin Name</th>
 					<th>Action</th>
@@ -113,7 +113,7 @@ if ($addPage > $amount) {
               </thead>
               <tbody>
 <?php
-$sqlget = "SELECT * FROM log ORDER BY logid DESC limit $page,20";
+$sqlget = "SELECT * FROM log ORDER BY logid DESC limit $page,50";
 $sqldata = mysqli_query($dbcon, $sqlget) or die('Connection could not be established');
 
 while ($row = mysqli_fetch_array($sqldata, MYSQLI_ASSOC)) {

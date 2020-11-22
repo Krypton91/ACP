@@ -8,7 +8,7 @@ if (!isset($_SESSION['logged'])) {
 }
 
 $staffPerms = $_SESSION['perms'];
-$perms = '"[[`money`,1],[`telnumber`,1],[`whitelist`,1],[`driverlicense`,1],[`ACP_LOGS`,0],[`bank`,1],[`superUser`,0],[`pwchange`,1],[`hwid`,1],[`logs`,0],[`ban`,1]]"';
+$perms = '"[[`money`,1],[`telnumber`,1],[`whitelist`,1],[`driverlicense`,1],[`ACPLOGS`,0],[`bank`,1],[`superUser`,0],[`pwchange`,1],[`hwid`,1],[`logs`,0],[`ban`,1]]"';
 
 if ($staffPerms['superUser'] != '1') {
     header('Location: lvlError.php');
