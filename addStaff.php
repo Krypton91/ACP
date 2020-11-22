@@ -8,7 +8,7 @@ if (!isset($_SESSION['logged'])) {
 }
 
 $staffPerms = $_SESSION['perms'];
-$perms = '"[[`notes`,0],[`cop`,0],[`medic`,0],[`money`,0],[`IG-Admin`,0],[`editPlayer`,0],[`housing`,0],[`gangs`,0],[`vehicles`,0],[`logs`,0],[`steamView`,0],[`ban`,0],[`kick`,0],[`unban`,0],[`globalMessage`,0],[`restartServer`,0],[`stopServer`,0],[`superUser`,0]]"';
+$perms = '"[[`money`,1],[`telnumber`,1],[`whitelist`,1],[`driverlicense`,1],[`ACP_LOGS`,0],[`bank`,1],[`superUser`,0],[`pwchange`,1],[`hwid`,1],[`logs`,0],[`ban`,1]]"';
 
 if ($staffPerms['superUser'] != '1') {
     header('Location: lvlError.php');
@@ -24,10 +24,33 @@ loginconnect();
 include 'header/header.php';
 
 ?>
-
-
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 style = "margin-top: 70px">Staff Menu</h1>
+<!-- Content Wrapper. Contains page content -->
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="logout.php" role="button"><i class="fas fa-bars"></i> Logout</a>
+      </li>
+    </ul>
+</nav>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
 
 		  	<div class="btn-group" role="group" aria-label="...">
 			<FORM METHOD="LINK" ACTION="staff.php">
@@ -59,7 +82,7 @@ if (isset($_POST['update'])) {
                 <tr>
 					<th>Benutzername</th>
 					<th>Kennwort</th>
-					<th>Update</th>
+					<th></th>
                 </tr>
               </thead>
               <tbody>

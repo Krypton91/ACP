@@ -57,10 +57,60 @@ include 'header/header.php';
 <div class="modal-dialog modal-lg">
   <div class="modal-content">
     <div class="modal-header">
+      <h4 class="modal-title" id="myModalLabel">Player Inventory</h4>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-      <h4 class="modal-title" id="myModalLabel">Player Inventory</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class='panel panel-info'>
+            <div class='panel-heading'>
+                <h3 class='panel-title'>Civilian Inventory</h3>
+            </div>
+            <div class='panel-body'>
+            <table class="table table-striped" style = "margin-top: -10px">
+					<th>ItemName:</th>
+                    <th>Anzahl:</th>
+                    <th>Benutzbar:</th>
+                <?php
+                    $sqlGetQueryInv = "SELECT * FROM `user_items` WHERE charid='$player->id'";
+                    $search_result22 = mysqli_query($dbcon, $sqlGetQueryInv) or die('Connection could not be established');
+                    
+                    while ($row = mysqli_fetch_array($search_result22, MYSQLI_ASSOC)) {
+                        $ItemID = $row['itemId'];
+                        $sqlGetQueryInv = "SELECT * FROM `items` WHERE id='$ItemID'";
+
+                        $result5 = mysqli_query($dbcon, $sqlGetQueryInv);
+                        $Item = $result5->fetch_object();
+                        $ItemName = $Item->itemName;
+                        echo '<td>' ?>
+                        <input class="form-control" onBlur="dbSave(this.value, '<?php echo $row['id']; ?>', 'money', '<?php echo $row['money']; ?>')"; type=text value= "<?php echo $row['money']; ?>" >
+                        <?php
+                        echo 'Item: '.$ItemName.' amount: '.$row['amount'];
+                    }
+                ?>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+ <!-- Add Support Tiocket Modal -->
+<div class="modal fade bd-example-modal-lg" id='AddTicketModal' tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="myModalLabel">Support</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
     <div class="modal-body">
 
@@ -243,7 +293,7 @@ include 'header/header.php';
 	   	            </div>
                    <!-- Button START -->
                   <div class="btn-group" role="group" aria-label="...">
-		              <input class = 'btn btn-primary btn-outline' type='submit' name='remove' value='Inventory'>
+		              <button type="button" class="btn btn-primary btn-outline" data-toggle="modal" data-target="#myModal">Edit Gear</button>
                    <!-- Button END -->
 	   	            </div>
                    <!-- Button START -->
@@ -274,7 +324,8 @@ include 'header/header.php';
                 <h3 class="card-title">Support-Info</h3>
                 <div class="card-tools">
                     <div class="input-group-append">
-                      <button type="submit" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                      <button type="button" class="btn btn-default" data-toggle="AddTicketModal" data-target="#AddTicketModal"><i class="fas fa-plus"></i></button>
+                     
                     </div>
                   </div>
                 </div>

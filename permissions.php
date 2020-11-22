@@ -20,9 +20,33 @@ $user = $result->fetch_object();
 
 include 'header/header.php';
 ?>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <h1 style = "margin-top: 70px">Permission Menu</h1>
-		<p class="page-header">Permission menu of the panel, allows you to change individual staff permissions.</p>
+<!-- Content Wrapper. Contains page content -->
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="logout.php" role="button"><i class="fas fa-bars"></i> Logout</a>
+      </li>
+    </ul>
+</nav>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
 
         <div class="btn-group" role="group" aria-label="...">
         <FORM METHOD="LINK" ACTION="staff.php">
@@ -47,14 +71,13 @@ echo "<div id ='civlic'>";
           $val = remove($value);
           $newVal = explode(',', $val);
           if ($newVal[1] == 1) {
-              echo "<button type='button' id=".$newVal[0]." class='license btn btn-success btn-sm' style='margin-bottom: 5px;' onClick='post1(this.id);'>".$newVal[0].'</button> ';
+              echo "<button type='button' id=".$newVal[0]." class='license btn btn-success btn-sm' style='margin-bottom: 5px;' onClick='post1(this.id);'>".$newVal[0].'</button> </br>';
           } else {
-              echo "<button type='button' id=".$newVal[0]." class='btn btn-danger btn-sm' style='margin-bottom: 5px;' onClick='post(this.id);'>".$newVal[0].'</button> ';
+              echo "<button type='button' id=".$newVal[0]." class='btn btn-danger btn-sm' style='margin-bottom: 5px;' onClick='post(this.id);'>".$newVal[0].'</button> </br>';
           }
       }
 
       echo '</div>
-      <div class="panel-footer">For changes to take place the staff user must re-log, if they are currently logged in. Also be aware that superUser only gives access to staff pages - meaning you still need other permissions to change the values. (IG-Admin = In-Game Admin on the players page. Logs = Admin Logs, not reimbursement logs. EditPlayer = Everything on the editPlayer page on players.)</div>
       </div>';
   }
 echo '</div>';
