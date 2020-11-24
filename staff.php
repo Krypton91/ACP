@@ -106,7 +106,6 @@ if (isset($_POST['update'])) {
         echo '<div class="alert alert-success" role="alert"><a href="#" class="alert-link">Password and/or username updated!</a></div>';
     }
 }
-
 ?>
           <div class="table-responsive">
             <table class="table table-striped" style = "margin-top: -10px">

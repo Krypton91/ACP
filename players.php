@@ -146,10 +146,6 @@ include 'header/header.php';
                 <th>Account ID</th>
                 <th>Spieler Name</th>
                 <th></th>
-                <th><form action = "players.php?search=cash" method="post"><input class='btn-link' type='submit' name='orderCash' value="Bargeld"></form></th>
-                <th><form action = "players.php?search=DriverLicense" method="post"><input class='btn-link' type='submit' name='orderBank' value="Telefonnummer"></form></th>
-                <th><form action = "players.php?search=isWhitelisted" method="post"><input class='btn-link' type='submit' name='orderisWhitelisted' value="Whitelisted"></form></th>
-                <th><form action = "players.php?search=medic" method="post"><input class='btn-link' type='submit' name='orderFührerschein' value="Führerschein"></form></th>
             </tr>
             </thead>
             <tbody>
@@ -168,16 +164,7 @@ include 'header/header.php';
                 $temparrayIndex = $row['id'];
                 echo '<td>'.utf8_encode($row['ingameName']).' </td>';
                 echo '<td>'.$return.'</td>';
-                echo '<td>' ?>
-                <input class="form-control" onBlur="dbSave(this.value, '<?php echo $row['id']; ?>', 'money', '<?php echo $row['money']; ?>')"; type=text value= "<?php echo $row['money']; ?>" >
-                <?php
-                //echo '</td>';
-                echo '<td>' ?>
-                <input class="form-control" onBlur="dbSave(this.value, '<?php echo $row['id']; ?>', 'telefonnummer', '<?php echo $row['telefonnummer']; ?>')"; type=text value= "<?php echo $row['telefonnummer']; ?>" >
-                <?php
                 echo '</td>';
-                outputSelection(1, 'isWhitelisted', $row['isWhitelisted'], $row['id']);
-                outputSelection(1, 'drivingLicense', $row['drivingLicense'], $row['id']);
                 echo '<form action=editPlayer.php method=post>';
                 echo '<td>'."<input class='btn btn-primary btn-outline' type=submit name=edit id=edit value=Edit".' ></td>';
                 echo "<td style='display:none;'>".'<input type=hidden name=hidden value='.$row['id'].'> </td>';

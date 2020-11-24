@@ -2,6 +2,7 @@
 
 session_start();
 ob_start();
+
 if (!isset($_SESSION['logged'])) {
     header('Location: ../index.php');
     die();
@@ -16,12 +17,7 @@ masterconnect();
 $sql = "SELECT * FROM `bank_konten` WHERE `ownerId` = $_POST[uid]";
 $result = mysqli_query($dbcon, $sql);
 $player = $result->fetch_object();
-
-$cash = $player->cash;
-$bank = $player->amount;
-$cop = $player->coplevel;
-$medic = $player->mediclevel;
-$admin = $player->adminlevel;
+$bank = $player->bankacc;
 
 if ($player->playerid != '' || $player->pid != '') {
     if ($player->playerid == '') {
@@ -33,12 +29,13 @@ if ($player->playerid != '' || $player->pid != '') {
 
 switch ($_POST['column']) {
     case 'amount':
-        $amount = logs($staffPerms['bank'], 'Bank', $pid, $user, $dbcon, $player, $_POST['editval']);
-        $UpdateQ = "UPDATE bank_konten SET $_POST[column]='$amount' WHERE ownerId='$_POST[uid]'";
+        $bankacc = logs($staffPerms['bank'], 'amount', $pid, $user, $dbcon, $player, $_POST['editval']);
+        $UpdateQ = "UPDATE bank_konten SET $_POST[column]='$bankacc' WHERE ownerId='$_POST[uid]'";
     break;
     default:
         $message = 'ERROR';
         logIt($user, $message, $dbcon);
     break;
 }
+
 mysqli_query($dbcon, $UpdateQ);

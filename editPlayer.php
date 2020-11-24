@@ -39,6 +39,8 @@ $result3 = mysqli_query($dbcon, $sql3);
 $Inventory = $result3->fetch_object();
 
 
+$VehicleIDToSearch = null;
+
 $username = utf8_encode($player->ingameName);
 $pid = playerID($player);
 include 'header/header.php';
@@ -54,7 +56,7 @@ include 'header/header.php';
 		  <form action='editPlayer.php' method='post'>
 
 
-
+<!-- PlayerInv -->
 <div class="modal fade bd-example-modal-lg" id='myModal' tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-lg">
   <div class="modal-content">
@@ -68,13 +70,16 @@ include 'header/header.php';
 
         <div class='panel panel-info'>
             <div class='panel-heading'>
-                <h3 class='panel-title'>Civilian Inventory</h3>
             </div>
             <div class='panel-body'>
             <table class="table table-striped" style = "margin-top: -10px">
-					    <th>ItemName:</th>
+					          <th>ItemName:</th>
                     <th>Anzahl:</th>
-                    <th>Benutzbar:</th>
+                    <th>Action:</th>
+                    <th></th>
+                    </tr>
+              </thead>
+            <tbody>
                 <?php
                     $sqlGetQueryInv = "SELECT * FROM `user_items` WHERE charid='$player->id'";
                     $search_result22 = mysqli_query($dbcon, $sqlGetQueryInv) or die('Connection could not be established');
@@ -86,10 +91,15 @@ include 'header/header.php';
                         $result5 = mysqli_query($dbcon, $sqlGetQueryInv);
                         $Item = $result5->fetch_object();
                         $ItemName = $Item->itemName;
-                        echo '<td>' ?>
-                        <input class="form-control" onBlur="dbSave(this.value, '<?php echo $row['id']; ?>', 'money', '<?php echo $row['money']; ?>')"; type=text value= "<?php echo $row['money']; ?>" >
+                         ?>
                         <?php
-                        echo 'Item: '.$ItemName.' amount: '.$row['amount'];
+                          echo '<td>'.$ItemName.'</td>';
+                          echo '<td>'.$row['amount'].' </td>';
+                          echo '</td>';
+                          echo "<td style='display:none;'>".'<input type=hidden name=hidden value='.$row['id'].'> </td>';
+                          echo '<td><button type="button" class="btn btn-default" value='.$row['id'].' onclick="DeleteItem(this.value);"><i class="fas fa-trash-alt"></i></button></td>';
+                          echo '</form>';
+                          echo '</tr>';
                     }
                 ?>
                 </table>
@@ -100,6 +110,124 @@ include 'header/header.php';
   </div>
 </div>
 
+
+
+<!-- vehicleInventory -->
+<div class="modal fade bd-example-modal-lg" id='vehicleInvModal' tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="myModalLabel">Fahrzeug Inventar</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+        <div class='panel panel-info'>
+            <div class='panel-heading'>
+            </div>
+            <div class='panel-body'>
+            <table class="table table-striped" style = "margin-top: -10px">
+					          <th>ItemName:</th>
+                    <th>Anzahl:</th>
+                    <th>Action:</th>
+                    <th></th>
+                    </tr>
+              </thead>
+            <tbody>
+                <?php
+                    $sqlGetQueryInv = "SELECT * FROM `vehicle_items` WHERE vehId='$VehicleIDToSearch'";
+                    $search_result22 = mysqli_query($dbcon, $sqlGetQueryInv) or die('Connection could not be established');
+                    
+                    while ($row = mysqli_fetch_array($search_result22, MYSQLI_ASSOC)) {
+                        $ItemID = $row['itemId'];
+                        $sqlGetQueryInv = "SELECT * FROM `items` WHERE id='$ItemID'";
+
+                        $result5 = mysqli_query($dbcon, $sqlGetQueryInv);
+                        $Item = $result5->fetch_object();
+                        $ItemName = $Item->itemName;
+                         ?>
+                        <?php
+                          echo '<td>'.$ItemName.'</td>';
+                          echo '<td>'.$row['amount'].' </td>';
+                          echo '</td>';
+                          echo "<td style='display:none;'>".'<input type=hidden name=hidden value='.$row['id'].'> </td>';
+                          echo '<td><button type="button" class="btn btn-default" value='.$row['id'].' onclick="FillVHID(this.value);"><i class="fas fa-trash-alt"></i></button></td>';
+                          echo '</form>';
+                          echo '</tr>';
+                    }
+                ?>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+ <!-- Vehicle -->
+<div class="modal fade bd-example-modal-lg" id='VHModal' tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="myModalLabel">Fahrzeuge von: <?php echo $player->ingameName?></h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+        <div class='panel panel-info'>
+            <div class='panel-heading'>
+            </div>
+            <div class='panel-body'>
+            <table class="table table-striped" style = "margin-top: -10px">
+					          <th>Fahrzeugname:</th>
+                    <th>Nummernschild:</th>
+                    <th>Ausgeparkt:</th>
+                    <th>Beschlagnahmt:</th>
+                    <th>Kaufdatum:</th>
+                    <th>Garage:</th>
+                    <th></th>
+                    </tr>
+              </thead>
+            <tbody>
+                <?php
+                    $sqlGetQueryInv = "SELECT * FROM `vehicles` WHERE `owner`='$player->id'";
+                    $search_result22 = mysqli_query($dbcon, $sqlGetQueryInv) or die('Connection could not be established');
+                    
+                    while ($row = mysqli_fetch_array($search_result22, MYSQLI_ASSOC)) {
+                        //$ItemID = $row['itemId'];
+                        //$sqlGetQueryInv = "SELECT * FROM `items` WHERE id='$ItemID'";
+
+                        $result6 = mysqli_query($dbcon, $sqlGetQueryInv);
+                        $Item = $result6->fetch_object();
+                        $ItemName = $Item->itemName;
+                         ?>
+                        <?php
+                          
+                          echo '<td>'.$row['modelId'].'</td>';
+                          echo '<td>'.$row['numberplate'].' </td>';
+                          echo '<td>'.$row['isSpawned'].' </td>';
+                          echo '<td>'.$row['isImpounded'].' </td>';
+                          echo '<td>'.$row['buyDate'].' </td>';
+                          echo '<td>'.$row['garage'].' </td>';
+                          $VehicleIDToSearch = $row['id'];
+                          echo '</td>';
+                          echo "<td style='display:none;'>".'<input type=hidden name=hidden value='.$row['id'].'> </td>';
+                          echo '<td><button type="button" data-toggle="modal" data-target="#vehicleInvModal" onclick="HideModalVH();" class="btn btn-default"><i class="fas fa-edit"></i></button></td>';
+                          echo '</form>';
+                          echo '</tr>';
+                    }
+                ?>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+  </div>
+</div>
 
 
 
@@ -133,10 +261,10 @@ include 'header/header.php';
             <div class="card-body pad">
               <div class="mb-3">
               <form action="addNote.php" method="post">
-                <textarea class="textarea" name="textarea" placeholder="NICHTS "
+                <textarea id= "textarea" class="textarea" name="textarea" placeholder="NICHTS "
                           style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
               </form>
-              <button type="Submit" class="btn btn-block btn-primary" onClick="safeNote(textarea.Value);">Hinzufügen</button>
+              <button type="button" class="btn btn-block btn-primary" onclick="UpdateNote(<?php echo $player->id; ?>);">Hinzufügen</button>
               </div>
             </div>
           </div>
@@ -183,8 +311,12 @@ include 'header/header.php';
             <!-- /.card-header -->
             <div class="card-body pad">
               <div class="mb-3">
-              <input name = "CashToUpdateVal" id="CashToUpdateVal" class="form-control" type=text value= "<?php echo $bankAccount->amount; ?>" >
-              <button type='button' name="update_confirm_bank" id="update_confirm_bank" class="btn btn-block btn-primary" >Ändern</button>
+              <form id="UpdateBankForm">
+              <input class="form-control" onBlur="UpdateBank(this.value, '<?php echo $player->id; ?>', 'amount', '<?php echo $bankAccount->amount; ?>')"; type=text value= "<?php echo $bankAccount->amount; ?>" >
+                <button type='button' name="update_confirm_bank" id="update_confirm_bank" onclick="UpdateBank();" class="btn btn-block btn-primary" >Ändern</button>
+              <input type="hidden" id="column" name="column" value="amount">
+              <input type="hidden" id="uid" name="uid" value="<?php $player->id?>">
+              </form>
               </div>
             </div>
           </div>
@@ -198,29 +330,116 @@ include 'header/header.php';
   </div>
 </div>
 </div>
-<script>  
- $(document).ready(function(){  
-      $('#update_confirm_bank').click(function(){  
-           var UpdateValue = $('#CashToUpdateVal').val();  
-           if(UpdateValue != '')  
-           {  
-             <?php
-             logIt("KryptonsBot", "update triggert!", $dbcon);
-             ?>
-                $.ajax({  
-                     url:"Backend/updateBank.php",
-                     method:"POST",  
-                     data: {column:"amount", editval:UpdateValue, uid:<?php $player->id?>}, 
-                     success:function(data)  
-                     {   
-                          $('#EditBankModul').hide();
-                          location.reload();
-                     }  
-                });  
-           } 
-      });  
- });  
- </script>
+
+
+<!-- Bargeld -->
+<div class="modal fade bd-example-modal-lg" id='EditMoneyModul' tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="myModalLabel">Geld von: <?php echo $player->ingameName ?></h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+        <div class='panel panel-info'>
+            <div class='panel-heading'>
+            </div>
+            <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-outline card-info">
+            <div class="card-header">
+              <h3 class="card-title">
+                Bargeld:
+              </h3>
+              <!-- /. tools -->
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body pad">
+              <div class="mb-3">
+              <form id="UpdateMoneyForm">
+              <input class="form-control" onBlur="UpdateMoney(this.value, '<?php echo $player->id; ?>', 'money', '<?php echo $player->money; ?>')"; type=text value= "<?php echo $player->money; ?>" >
+                <button type='button' name="update_confirm_bank" id="update_confirm_bank" onclick="UpdateMoney();" class="btn btn-block btn-primary" >Ändern</button>
+              <input type="hidden" id="column" name="column" value="amount">
+              <input type="hidden" id="uid" name="uid" value="<?php $player->id?>">
+              </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.col-->
+      </div>
+      <!-- ./row -->
+    </section>
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+                function newAlert (type, message) {
+                    $("#alert-area").append($("<div class='alert " + type + " fade in' data-alert><p> " + message + " </p></div>"));
+                    $(".alert").delay(2000).fadeOut("slow", function () { $(this).remove(); });
+                }
+                function UpdateBank(value, uid, column, original){
+                    if (value != original) {
+                        //newAlert('alert-success', 'Erfolgreich!');
+                        $.post('Backend/updateBank.php',{column:column, editval:value, uid:uid},
+                            function(){
+                                location.reload();
+                            });
+                    };
+                }
+
+                function UpdateMoney(value, uid, column, original){
+                    if (value != original) {
+                        //newAlert('alert-success', 'Erfolgreich!');
+                        $.post('Backend/updatePlayers.php',{column:column, editval:value, uid:uid},
+                            function(){
+                                location.reload();
+                            });
+                    };
+                }
+
+                function UpdateNote(uid){
+                        //newAlert('alert-success', 'Erfolgreich!');
+                        $.post('addNote.php',{editval:document.getElementById("textarea").value, uid:uid},
+                            function(){
+                                location.reload();
+                            });
+                }
+                function DeleteNote(id){
+                        //newAlert('alert-success', 'Erfolgreich!');
+                        $.post('RemoveNote.php',{id:id},
+                            function(){
+                                location.reload();
+                            });
+                }
+                function DeleteItem(id){
+                        //newAlert('alert-success', 'Erfolgreich!');
+                        $.post('DeleteItem.php',{id:id},
+                            function(){
+                                location.reload();
+                            });
+                }
+
+                function UpdateWhitelist()
+                {
+                   
+                  $.post('UpdateWhitelist.php',{uid:<?php echo $player->id;?>},
+                            function(){
+                                location.reload();
+                            });
+                }
+                function HideModalVH()
+                {
+                  $('#VHModal').modal('hide');
+                }
+            </script>
 
  <!-- Main content -->
  <section class="content">
@@ -253,7 +472,7 @@ include 'header/header.php';
               <div class="icon">
               <i class="fas fa-money-bill"></i>
               </div>
-              <a href="#" class="small-box-footer">Edit <i class="fas fa-arrow-circle-right"></i></a>
+              <a data-toggle="modal" data-target="#EditMoneyModul" class="small-box-footer">Edit <i class="fas fa-arrow-circle-right"></i></a>
           </div>
           
           </div>
@@ -278,17 +497,17 @@ include 'header/header.php';
               <div class="inner">
                 <h3>Whitelisted:</h3>
                 <p><?php
-                if($account->isWhitelisted == 1)
-                      echo "Yes!";
+                if($player->isWhitelisted == 1)
+                      echo "Ja!";
                 else
-                    echo "No!";
+                    echo "Nein!";
                   ?>
                  </p>
               </div>
               <div class="icon">
               <i class="fas fa-clock"></i>
               </div>
-              <a href="#" class="small-box-footer">Whitelist</a>
+              <a onclick="UpdateWhitelist(<?php $account->isWhitelisted ?>);" class="small-box-footer">Whitelist</a>
           </div>
           </div>
           </div>
@@ -326,6 +545,15 @@ include 'header/header.php';
                       echo '</br>';
                       echo '<center><b>SocialClub: </b>'.$account->socialClub.'</center>';
                       echo '<center><b>First Name: </b>'.$player->ingameName.'</center>';
+                      echo '<center><b>Handynummer: </b>'.$player->telefonnummer.'</center>';
+                      if($player->drivingLicense == 1)
+                      {
+                        echo '<center><b>Führerschein: </b> <small class="badge badge-success"></i>Ja</small></center>';
+                      }
+                      else
+                      {
+                        echo '<center><b>Führerschein: </b> <small class="badge badge-danger"></i>Nein</small></center>';
+                      }
                       //Essen Trinken Leben
                       echo '</br>';
                       echo '<center>Essen: '.$player->food.'</center>';
@@ -357,18 +585,37 @@ include 'header/header.php';
                   </br>
                    <!-- Button START -->
                   <div class="btn-group" role="group" aria-label="...">
-		              <input class = 'btn btn-primary btn-outline' type='submit' name='remove' value='Vehicles'>
+		              <button type="button" class="btn btn-primary btn-outline" data-toggle="modal" data-target="#VHModal">Fahrzeuge</button>
                    <!-- Button END -->
 	   	            </div>
                    <!-- Button START -->
                   <div class="btn-group" role="group" aria-label="...">
-		              <button type="button" class="btn btn-primary btn-outline" data-toggle="modal" data-target="#myModal">Edit Gear</button>
+		              <button type="button" class="btn btn-primary btn-outline" data-toggle="modal" data-target="#myModal">Ausrüstung</button>
                    <!-- Button END -->
 	   	            </div>
-                   <!-- Button START -->
+                  <!-- Button START -->
                   <div class="btn-group" role="group" aria-label="...">
 		              <input class = 'btn btn-primary btn-outline' type='submit' name='remove' value='Ban'>
-                   <!-- Button END -->
+                  <!-- Button END -->
+	   	            </div>
+                   <!-- Button START -->
+                  <div class="btn-group" role="group" aria-label="...">
+                  <?php
+                  $isActiv = 0;
+                  if($player->isWhitelisted == 0)
+                  {
+                    ?>
+                    <button type='button' name="update_confirm_bank1" id="update_confirm_bank1" onclick="UpdateWhitelist();" class="btn btn-block btn-primary" >Whitelist Hinzufügen</button>
+                    <?php
+                  }
+                  else
+                  {
+                    ?>
+                    <button type='button' name="update_confirm_bank2" id="update_confirm_bank2" onclick="UpdateWhitelist();" class="btn btn-block btn-primary" >Whitelist Entfernen</button>
+                    <?php
+                  }
+                  ?>
+                  <!-- Button END -->
 	   	            </div>
                   <div class="card-tools">
                     <ul class="nav nav-pills ml-auto">
@@ -410,7 +657,7 @@ include 'header/header.php';
                   <tbody>
                               <?php
 
-                              $sqlget = "SELECT * FROM reimbursement_log WHERE playerid=$player->accountId;";
+                              $sqlget = "SELECT * FROM reimbursement_log WHERE playerid=$player->id;";
                               $search_result = mysqli_query($dbcon, $sqlget) or die('Connection could not be established');
 
                               while ($row = mysqli_fetch_array($search_result, MYSQLI_ASSOC)) {
@@ -419,6 +666,8 @@ include 'header/header.php';
                                   echo '<td>'.$row['staff_name'].' </td>';
                                   echo '<td>'.$row['reason'].' </td>';
                                   echo '<td>'.$row['timestamp'].' </td>';
+                                  echo "<td style='display:none;'>".'<input type=hidden name=hidden value='.$row['reimbursement_id'].'> </td>';
+                                  echo '<td><button type="button" class="btn btn-default" value='.$row['reimbursement_id'].' onclick="DeleteNote(this.value);"><i class="fas fa-trash-alt"></i></button></td>';
                                   echo '</tr>';
                               }
                               ?>
@@ -443,61 +692,6 @@ include 'header/header.php';
       <b>Version</b> 1.0
     </div>
   </footer>
-<script>
-
-function safeNote(value){
-$.post('addNote.php',{editval:value},
-location.reload();
-    });
-  };
-}
-
-
-function post (id)
-{
-var newid = "#" + id;
-
-	$(newid).toggleClass("btn-danger btn-success");
-
-	$.post('Backend/changeLicense.php',{id:id,uid:'<?php echo $uidPlayer; ?>'},
-	function(data)
-	{
-
-
-	});
-}
-
-function post1 (id)
-{
-var newid = "#" + id;
-
-	 $(newid).toggleClass("btn-danger btn-success");
-
-	var newid = id;
-	$.post('Backend/changeLicense.php',{id:id,uid:'<?php echo $uidPlayer; ?>'},
-	function(data)
-	{
-
-	});
-}
-//FUNCTIONS DONT TOUCH!!
-function newAlert (type, message) {
-    $("#alert-area").append($("<div class='alert " + type + " fade in' data-alert><p> " + message + " </p></div>"));
-    $(".alert").delay(2000).fadeOut("slow", function () { $(this).remove(); });
-}
-
-function UpdateBank(){
-
-            newAlert('alert-success', 'Value Updated!');
-            var value = document.getElementById('CashToUpdateVal').value;
-            logIt("SYSTEM", "dbSafe triggert with value: " + value, $dbcon);
-            $.post('Backend/updateBank.php',{editval:value, uid:<?PHP $player->id?>},
-            function(){
-              location.reload();
-            });
-        };
-}
-</script>
               </tbody>
             </table>
           </div>
@@ -543,25 +737,6 @@ function UpdateBank(){
 <script src="dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-
-
-<!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-<!-- Summernote -->
-<script src="../../plugins/summernote/summernote-bs4.min.js"></script>
-<script>
-  $(function () {
-    // Summernote
-    $('.textarea').summernote()
-  })
 </script>
-
-
-  </body>
+</body>
 </html>
