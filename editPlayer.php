@@ -183,20 +183,8 @@ include 'header/header.php';
             <!-- /.card-header -->
             <div class="card-body pad">
               <div class="mb-3">
-              <form method="post" action="editPlayer.php">
               <input name = "CashToUpdateVal" id="CashToUpdateVal" class="form-control" type=text value= "<?php echo $bankAccount->amount; ?>" >
-              <button type='submit' class="btn btn-block btn-primary" onclick="<?php 
-              $NewBankValue = $_POST['CashToUpdateVal'];
-              $UpdateQ = "UPDATE bank_konten SET amount='$NewBankValue' WHERE ownerId='$player->id'";
-              mysqli_query($dbcon, $UpdateQ);
-
-              logIt("KRYPTONSBOT", "DEBUG QUERY:", $dbcon);
-              logIt("KRYPTONSBOT", $NewBankValue, $dbcon);
-              logIt("KRYPTONSBOT", $player->id, $dbcon);
-              logIt("KRYPTONSBOT", "DEBUG END:", $dbcon);
-              
-              ?>">Ändern</button>
-              </form>
+              <button type='button' name="update_confirm_bank" id="update_confirm_bank" class="btn btn-block btn-primary" >Ändern</button>
               </div>
             </div>
           </div>
@@ -210,6 +198,29 @@ include 'header/header.php';
   </div>
 </div>
 </div>
+<script>  
+ $(document).ready(function(){  
+      $('#update_confirm_bank').click(function(){  
+           var UpdateValue = $('#CashToUpdateVal').val();  
+           if(UpdateValue != '')  
+           {  
+             <?php
+             logIt("KryptonsBot", "update triggert!", $dbcon);
+             ?>
+                $.ajax({  
+                     url:"Backend/updateBank.php",
+                     method:"POST",  
+                     data: {column:"amount", editval:UpdateValue, uid:<?php $player->id?>}, 
+                     success:function(data)  
+                     {   
+                          $('#EditBankModul').hide();
+                          location.reload();
+                     }  
+                });  
+           } 
+      });  
+ });  
+ </script>
 
  <!-- Main content -->
  <section class="content">
@@ -480,7 +491,7 @@ function UpdateBank(){
             newAlert('alert-success', 'Value Updated!');
             var value = document.getElementById('CashToUpdateVal').value;
             logIt("SYSTEM", "dbSafe triggert with value: " + value, $dbcon);
-            $.post('Backend/updateBank.php',{column:'amount', editval:value, uid:<?PHP $player->id?>},
+            $.post('Backend/updateBank.php',{editval:value, uid:<?PHP $player->id?>},
             function(){
               location.reload();
             });

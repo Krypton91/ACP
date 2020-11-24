@@ -2,7 +2,6 @@
 
 session_start();
 ob_start();
-
 if (!isset($_SESSION['logged'])) {
     header('Location: ../index.php');
     die();
@@ -18,7 +17,11 @@ $sql = "SELECT * FROM `bank_konten` WHERE `ownerId` = $_POST[uid]";
 $result = mysqli_query($dbcon, $sql);
 $player = $result->fetch_object();
 
+$cash = $player->cash;
 $bank = $player->amount;
+$cop = $player->coplevel;
+$medic = $player->mediclevel;
+$admin = $player->adminlevel;
 
 if ($player->playerid != '' || $player->pid != '') {
     if ($player->playerid == '') {
@@ -39,4 +42,3 @@ switch ($_POST['column']) {
     break;
 }
 mysqli_query($dbcon, $UpdateQ);
-
