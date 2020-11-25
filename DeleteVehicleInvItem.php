@@ -12,8 +12,8 @@ include 'verifyPanel.php';
 masterconnect();
 $staffPerms = $_SESSION['perms'];
 $user = $_SESSION['user'];
-logIt($user, "hat ein Item aus dem PlayerInv gelöscht!", $dbcon);
-$sql = "DELETE FROM user_items WHERE id='$_POST[id]'";
+logIt($user, "hat ein Item aus dem Kofferaum gelöscht!", $dbcon);
+$sql = "DELETE FROM vehicle_items WHERE id='$_POST[id]'";
 mysqli_query($dbcon, $sql);
 
 ?>

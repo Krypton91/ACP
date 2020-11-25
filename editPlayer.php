@@ -215,14 +215,34 @@ include 'header/header.php';
                           echo '<td>'.$row['garage'].' </td>';
                           $VehicleIDToSearch = $row['id'];
                           echo '</td>';
+                          echo '<form action=showVehicleInv.php method=post>';
+                          echo '<td>'."<input class='btn btn-primary btn-outline' type=submit name=edit id=edit value=Edit".' ></td>';
                           echo "<td style='display:none;'>".'<input type=hidden name=hidden value='.$row['id'].'> </td>';
-                          echo '<td><button type="button" data-toggle="modal" data-target="#vehicleInvModal" onclick="HideModalVH();" class="btn btn-default"><i class="fas fa-edit"></i></button></td>';
+                          echo "<td style='display:none;'>".'<input type=hidden name=guid value='.$return.'> </td>';
+                          echo '</form>';
+                          //echo "<td style='display:none;'>".'<input type=hidden name=hidden value='.$row['id'].'> </td>';
+                          //echo '<td><button type="button" data-toggle="modal" data-target="#vehicleInvModal" data-id="'.$row['id'].'"" class="btn btn-default"><i class="fas fa-edit"></i></button></td>';
                           echo '</form>';
                           echo '</tr>';
                     }
                 ?>
                 </table>
             </div>
+            <script>
+            $(document).ready(function(){
+            $('#vehicleInvModal').on('show.bs.modal', function (e) {
+              var rowid = $(e.relatedTarget).data('id');
+              $.ajax({
+                  type : 'post',
+                  url : 'showVehicleInv.php.php', //Here you will fetch records 
+                  data :  'rowid='+ rowid, //Pass $id
+                  success : function(data){
+                  $('.fetched-data').html(data);//Show fetched data from database
+                  }
+        });
+     });
+});
+            </script>
         </div>
     </div>
   </div>
