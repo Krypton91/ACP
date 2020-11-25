@@ -613,11 +613,7 @@ include 'header/header.php';
 		              <button type="button" class="btn btn-primary btn-outline" data-toggle="modal" data-target="#myModal">Ausrüstung</button>
                    <!-- Button END -->
 	   	            </div>
-                  <!-- Button START -->
-                  <div class="btn-group" role="group" aria-label="...">
-		              <input class = 'btn btn-primary btn-outline' type='submit' name='remove' value='Ban'>
-                  <!-- Button END -->
-	   	            </div>
+                  
                    <!-- Button START -->
                   <div class="btn-group" role="group" aria-label="...">
                   <?php
